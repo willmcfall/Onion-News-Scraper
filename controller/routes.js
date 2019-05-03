@@ -13,23 +13,23 @@ app.get("/", function(req, res) {
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://www.echojs.com/").then(function(response) {
+  axios.get("https://www.theonion.com/c/news-in-brief").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
-    // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
-      // Save an empty result object
+    // With cheerio, find each p-tag with the "title" class
+    // (i: iterator. element: the current element)
+    $("article div.item__content div.item__text h1.headline a").each(function(i, element) {
+  
       var result = {};
 
-      // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("a")
-        .attr("href");
-
+      // // Save the text of the element in a "title" variable
+      result.title = $(this).children().text();
+  
+      // // In the currently selected element, look at its child elements (i.e., its a-tags),
+      // // then save the values for any "href" attributes that the child elements may have
+      result.link = $(this).attr("href");
+  
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
