@@ -1,38 +1,43 @@
-// Load express modules
+// Load express, morgan, mongoose, and exphbs Node modules
 var express = require("express");
-var app = express();
-
-// Load express handlebar modules
+var logger = require("morgan");
+var mongoose = require("mongoose");
 var exphbs = require("express-handlebars");
 
-// Establish middleware settings
-app.use(express.urlencoded({ extended: false }));
+// Initialize Express
+// Load express-handlebar Node module for presenting handlebars templates
+// Load morgan logger Node module for logging requests
+// Establish Express setting to parse request body as JSON
+// Establish Express setting to make public a static folder
+// Start the server on port 3000
+
+var PORT = 3000;
+var app = express();
+app.set("view engine", "handlebars");
+app.use(logger("dev"));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
-
-
-// Establish port settings
-var PORT = process.env.PORT || 3002;
 app.listen(PORT, function() {
-  console.log("App running on port 3002!");
+  console.log("App running on port " + PORT + "!");
 });
 
 
-// Connect to the model
-var db = require("./model/model")
+// Establish connection to the model
+var db = require("./model/index");
 
-// Handlebars
+// Establish connection to the view
 app.engine(
   "handlebars",
   exphbs({
     defaultLayout: "main"
   })
 );
-app.set("view engine", "handlebars");
 
+// Establish connection to the controller
+require("./controller/routes")(app);
 
-// Connect to the controller
-require("./controller/apiRoutes")(app);
-require("./controller/htmlRoutes")(app);
+// Establish connection to MongoDB
+mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
 module.exports = app;
