@@ -1,4 +1,7 @@
+// Load required modules
 var db = require("../model/model");
+var axios = require("axios");
+var cheerio = require("cheerio");
 
 module.exports = function(app) {
   // Retrieve data from the db
