@@ -37,3 +37,17 @@ textarea {
 h1,h2 {
     color:rgb(0,107,58)
 }
+
+hr {
+  border-color:rgb(0,107,58);
+}
+
+#titleinput{
+  margin: 10px;
+  padding: 5px;
+}
+
+#bodyinput{
+  margin: 10px;
+  padding: 5px;
+}

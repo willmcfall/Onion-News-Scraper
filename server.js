@@ -37,6 +37,9 @@ app.engine(
 require("./controller/routes")(app);
 
 // Establish connection to MongoDB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/unit18Populated";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 module.exports = app;
