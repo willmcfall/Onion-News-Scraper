@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static("public"));
 
+
 // Establish port settings
 var PORT = process.env.PORT || 3002;
 app.listen(PORT, function() {
@@ -20,7 +21,7 @@ app.listen(PORT, function() {
 // Connect to the model
 var db = require("./model/model")
 
-// Connect to the view
+// Handlebars
 app.engine(
   "handlebars",
   exphbs({
@@ -28,6 +29,7 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+
 
 // Connect to the controller
 require("./controller/apiRoutes")(app);
