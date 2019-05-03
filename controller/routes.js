@@ -4,6 +4,11 @@ var cheerio = require("cheerio");
 var db = require("../model/index");
 
 module.exports = function(app){
+  
+// A GET route for loading the main page
+app.get("/", function(req, res) {
+    res.render("index")
+  });
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
