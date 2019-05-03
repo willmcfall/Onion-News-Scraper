@@ -10,8 +10,7 @@ var exphbs = require("express-handlebars");
 // Establish Express setting to parse request body as JSON
 // Establish Express setting to make public a static folder
 // Start the server on port 3000
-
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 var app = express();
 app.set("view engine", "handlebars");
 app.use(logger("dev"));
